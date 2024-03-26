@@ -14,7 +14,6 @@ public class UserRegisterTest {
     private String email = RandomStringUtils.randomAlphabetic(10) + "@yandex.ru";
     private String password = RandomStringUtils.randomNumeric(10);
     private String name = RandomStringUtils.randomAlphabetic(10);
-    public String accessToken;
 
     @Before
     public void setUp() {
@@ -107,12 +106,6 @@ public class UserRegisterTest {
     @After
     @DisplayName("Удаление тестового пользователя")
     public void deleteTestData() {
-        if (accessToken != null) {
-            given()
-                    .header("Authorization", "Bearer" + accessToken)
-                    .when()
-                    .delete(Endpoints.DELETE_USER)
-                    .then().log().all().statusCode(200);
-        }
+        UserCreate.deleteUser();
     }
 }
