@@ -30,7 +30,7 @@ public class UserLoginTest {
                 .then().log().all().statusCode(200)
                 .body("success", equalTo(true))
                 .body("user.email", equalTo("test-data@yandex.ru"))
-                .body("user.name", equalTo("Updated Test User"))
+                .body("user.name", equalTo("Username"))
                 .body("accessToken", notNullValue())
                 .body("refreshToken", notNullValue());
     }
