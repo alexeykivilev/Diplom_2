@@ -14,7 +14,7 @@ public class UserRegisterTest {
     private String email = RandomStringUtils.randomAlphabetic(10) + "@yandex.ru";
     private String password = RandomStringUtils.randomNumeric(10);
     private String name = RandomStringUtils.randomAlphabetic(10);
-    private String accessToken;
+    public String accessToken;
 
     @Before
     public void setUp() {
@@ -37,7 +37,6 @@ public class UserRegisterTest {
                 .body("success", equalTo(true))
                 .body("user.email", notNullValue())
                 .body("user.name", notNullValue());
-//         accessToken = response.jsonPath().getString("accessToken");
     }
 
     @Test
