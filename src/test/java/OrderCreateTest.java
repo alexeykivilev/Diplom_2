@@ -30,7 +30,6 @@ public class OrderCreateTest {
                 .then().log().all().statusCode(200)
                 .body("success", equalTo(true));
     }
-
     @Test
     @DisplayName("Создание заказа без авторизации")
     @Description("API - /api/orders")

@@ -16,7 +16,6 @@ public class GetOrdersTest {
         accessToken = UserCreate.createNewUser();
     }
 
-
     @Test
     @DisplayName("Получение заказов с авторизацией")
     @Description("API - /api/orders")

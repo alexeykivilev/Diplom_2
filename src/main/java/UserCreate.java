@@ -4,9 +4,6 @@ import pojo.UserData;
 import static io.restassured.RestAssured.*;
 
 public class UserCreate {
-    private  String email;
-    private  String password;
-    private  String name;
     public static String accessToken;
 
     public static String createNewUser() {
