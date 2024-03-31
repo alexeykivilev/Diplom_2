@@ -1,5 +1,8 @@
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
+
+import io.restassured.response.Response;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import io.qameta.allure.Description;
@@ -7,10 +10,12 @@ import io.qameta.allure.junit4.DisplayName;
 import pojo.UserData;
 
 public class UserLoginTest {
+    private String accessToken;
 
     @Before
     public void setUp() {
         baseURI = Endpoints.BASE_URL;
+        UserCreate.createBaseUser();
     }
 
     @Test
@@ -18,21 +23,23 @@ public class UserLoginTest {
     @Description("API - /api/auth/login")
     public void loginAsExistedUserTest() {
         UserData userData = new UserData();
-        userData.setEmail("test-data@yandex.ru");
-        userData.setPassword("password");
-
+        userData.setEmail("alexey@yandex.ru");
+        userData.setPassword("123456");
+        Response response =
         given()
                 .header("Content-Type", "application/json")
                 .and()
                 .body(userData)
                 .when()
-                .post(Endpoints.LOGIN)
-                .then().log().all().statusCode(200)
+                .post(Endpoints.LOGIN);
+                response.then().log().all().statusCode(200)
                 .body("success", equalTo(true))
-                .body("user.email", equalTo("test-data@yandex.ru"))
-                .body("user.name", equalTo("Username"))
+                .body("user.email", equalTo("alexey@yandex.ru"))
+                .body("user.name", equalTo("alexeytestbaseuser"))
                 .body("accessToken", notNullValue())
                 .body("refreshToken", notNullValue());
+                accessToken = response.then().extract().path("accessToken");
+
     }
 
     @Test
@@ -71,5 +78,11 @@ public class UserLoginTest {
                 .then().log().all().statusCode(401)
                 .body("success", equalTo(false))
                 .body("message", equalTo("email or password are incorrect"));
+    }
+
+    @After
+    @DisplayName("Удаление тестового пользователя")
+    public void deleteTestData() {
+        UserCreate.deleteUser(accessToken);
     }
 }

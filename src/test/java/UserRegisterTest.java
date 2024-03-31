@@ -11,6 +11,7 @@ import io.qameta.allure.junit4.DisplayName;
 import pojo.UserData;
 
 public class UserRegisterTest {
+    private String accessToken;
     private String email = RandomStringUtils.randomAlphabetic(10) + "@yandex.ru";
     private String password = RandomStringUtils.randomNumeric(10);
     private String name = RandomStringUtils.randomAlphabetic(10);
@@ -42,7 +43,8 @@ public class UserRegisterTest {
     @DisplayName("Создание пользователя, который уже зарегистрирован")
     @Description("API - /api/auth/register")
     public void createUserAlreadyRegisteredTest() {
-        UserData userData = new UserData("test-data@yandex.ru", "password", "Username");
+        accessToken = UserCreate.createBaseUser();
+        UserData userData = new UserData("alexey@yandex.ru", "2323334", "alexeytestbaseuser");
         Response response =
         given()
                 .header("Content-Type", "application/json")
@@ -106,6 +108,6 @@ public class UserRegisterTest {
     @After
     @DisplayName("Удаление тестового пользователя")
     public void deleteTestData() {
-        UserCreate.deleteUser();
+        UserCreate.deleteUser(accessToken);
     }
 }

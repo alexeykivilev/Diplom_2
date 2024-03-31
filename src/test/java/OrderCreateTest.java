@@ -18,7 +18,7 @@ public class OrderCreateTest {
     @DisplayName("Создание заказа с авторизацией")
     @Description("API - /api/orders")
     public void createNewOrderAuthorizedTest() {
-        accessToken = UserCreate.createNewUser();
+        accessToken = UserCreate.createNewRandomUser();
         String json = "{\n" + "\"ingredients\": [\n" + "\"61c0c5a71d1f82001bdaaa73\",\n" + "\"61c0c5a71d1f82001bdaaa70\",\n" + "\"61c0c5a71d1f82001bdaaa77\",\n" + "\"61c0c5a71d1f82001bdaaa7a\",\n" + "\"61c0c5a71d1f82001bdaaa6c\"\n" + "]\n" + "}";
         given()
                 .header("Authorization", "Bearer" + accessToken)
@@ -49,7 +49,7 @@ public class OrderCreateTest {
     @DisplayName("Создание заказа без ингредиентов")
     @Description("API - /api/orders")
     public void createNewOrderWithNoIngredientsTest() {
-        accessToken = UserCreate.createNewUser();
+        accessToken = UserCreate.createNewRandomUser();
         String json = "";
         given()
                 .header("Authorization", "Bearer" + accessToken)
@@ -81,7 +81,7 @@ public class OrderCreateTest {
     @After
     @DisplayName("Удаление тестового пользователя")
     public void deleteTestData() {
-        UserCreate.deleteUser();
+        UserCreate.deleteUser(accessToken);
     }
 
 }
